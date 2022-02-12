@@ -5,7 +5,13 @@ const Drone = require("../models/Drone.model")
 // require the Drone model here
 
 
-
+router
+  .post('/drones/:id/delete', (req, res, next) => {
+      const id = req.params.id;
+      Drone.findByIdAndDelete(id)            // Iteration #5: Delete the drone
+        .then(() => res.redirect("/drones"))
+        .catch(() => `Error while deleting the drone`)
+});
 
 
 router
@@ -24,10 +30,9 @@ router
     const name = req.body.name;
     const propellers = req.body.propellers;
     const maxSpeed = req.body.maxSpeed;
-
+    
     Drone.findByIdAndUpdate(id,{ name, propellers, maxSpeed })
     .then(() => {
-      
       res.redirect( "/drones" );
     });
   });
@@ -35,13 +40,7 @@ router
   
 
 
-router
-  .post('/drones/:id/delete', (req, res, next) => {
-      const id = req.params.id;
-      Drone.findByIdAndDelete(id)            // Iteration #5: Delete the drone
-        .then(() => res.redirect("/drones"))
-        .catch(() => `Error while deleting the drone`)
-});
+
 
 
 router
